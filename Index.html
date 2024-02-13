@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculation Page with Memory</title>
+<style>
+    /* Add your CSS styles here */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 100vh;
+    }
+    form {
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 90%;
+        max-width: 400px;
+    }
+    input[type=text], input[type=button] {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+    input[type=button] {
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+    }
+    input[type=button]:hover {
+        background-color: #45a049;
+    }
+    label {
+        margin-top: 10px;
+    }
+    #result {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h2>Calculation Form</h2>
+
+<form id="calcForm">
+    <label for="ice">ICE:</label>
+    <input type="text" id="ice" name="ice" placeholder="Enter ICE value">
+    
+    <label for="price">Price:</label>
+    <input type="text" id="price" name="price" placeholder="Enter Price">
+    
+    <label for="fx">Fx:</label>
+    <input type="text" id="fx" name="fx" placeholder="Enter Fx value">
+    
+    <input type="button" value="Submit" onclick="performCalculation()">
+</form>
+
+<p id="result"></p>
+
+<script>
+// Function to perform calculation
+function performCalculation() {
+    var ice = parseFloat(document.getElementById('ice').value) || 0;
+    var price = parseFloat(document.getElementById('price').value) || 0;
+    var fx = parseFloat(document.getElementById('fx').value) || 1; // Prevent division by zero
+    
+    var result = (price / fx) / 7.84 - ice;
+
+    // Save inputs to local storage
+    localStorage.setItem('ice', ice);
+    localStorage.setItem('price', price);
+    localStorage.setItem('fx', fx);
+
+    document.getElementById('result').innerHTML = "Result: " + result.toFixed(2);
+}
+
+// Function to load saved values from local storage
+function loadSavedValues() {
+    if(localStorage.getItem('ice')) {
+        document.getElementById('ice').value = localStorage.getItem('ice');
+    }
+    if(localStorage.getItem('price')) {
+        document.getElementById('price').value = localStorage.getItem('price');
+    }
+    if(localStorage.getItem('fx')) {
+        document.getElementById('fx').value = localStorage.getItem('fx');
+    }
+}
+
+// Load saved values when the page loads
+window.onload = loadSavedValues;
+</script>
+
+</body>
+</html>
+
